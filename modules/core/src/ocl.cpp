@@ -876,12 +876,7 @@ bool haveOpenCL()
     if (!g_isOpenCLInitialized)
     {
         CV_TRACE_REGION("Init_OpenCL_Runtime");
-        const char* envPath =
-#ifdef NO_GETENV
-            NULL;
-#else
-            getenv("OPENCV_OPENCL_RUNTIME");
-#endif
+        const char* envPath = getenv("OPENCV_OPENCL_RUNTIME");
         if (envPath)
         {
             if (cv::String(envPath) == "disabled")
@@ -1742,12 +1737,8 @@ static cl_device_id selectOpenCLDevice()
 {
     std::string platform, deviceName;
     std::vector<std::string> deviceTypes;
-    const char* configuration =
-#ifdef NO_GETENV
-        NULL;
-#else
-        getenv("OPENCV_OPENCL_DEVICE");
-#endif
+
+    const char* configuration = getenv("OPENCV_OPENCL_DEVICE");
     if (configuration &&
             (strcmp(configuration, "disabled") == 0 ||
              !parseOpenCLDeviceConfiguration(std::string(configuration), platform, deviceTypes, deviceName)

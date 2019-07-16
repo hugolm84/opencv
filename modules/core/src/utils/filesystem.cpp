@@ -169,8 +169,8 @@ cv::String getcwd()
 {
     CV_INSTRUMENT_REGION();
     cv::AutoBuffer<char, 4096> buf;
-#if defined WIN32 || defined _WIN32
-#if defined WINRT || defined _WIN32_WCE
+#if defined WIN32 || defined _WIN32 || defined WINCE
+#ifdef WINRT
     return cv::String();
 #else
     DWORD sz = GetCurrentDirectoryA(0, NULL);

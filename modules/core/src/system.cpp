@@ -913,20 +913,6 @@ String tempfile( const char* suffix )
     CV_Assert((copied != MAX_PATH) && (copied != (size_t)-1));
     fname = String(aname);
     RoUninitialize();
-#elif _WIN32_WCE
-    const auto kMaxPathSize = MAX_PATH+1;
-    wchar_t temp_dir[kMaxPathSize] = {0};
-    wchar_t temp_file[kMaxPathSize] = {0};
-
-    ::GetTempPathW(kMaxPathSize, temp_dir);
-
-    if(0 != ::GetTempFileNameW(temp_dir, L"ocv", 0, temp_file)) {
-        DeleteFileW(temp_file);
-        char aname[MAX_PATH];
-        size_t copied = wcstombs(aname, temp_file, MAX_PATH);
-        CV_Assert((copied != MAX_PATH) && (copied != (size_t)-1));
-        fname = String(aname);
-    }
 #else
     char temp_dir2[MAX_PATH] = { 0 };
     char temp_file[MAX_PATH] = { 0 };
